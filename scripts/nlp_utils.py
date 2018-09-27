@@ -51,6 +51,13 @@ class Preprocess(object):
         return words
 
     def review_to_sentences(self, review, remove_stopwords = True):
+        '''
+        Tokenize review into tokenized sentences for Word2Vec trainning.
+
+        :param review: string
+        :param remove_stopwords: boolean
+        :return: list of strings
+        '''
 
         review_text = self.html_to_text(review)
         raw_sentences = nltk.sent_tokenize(review_text.strip())
@@ -69,7 +76,6 @@ class Preprocess(object):
 
         :param review: string
         :param remove_stopwords: boolean
-        :param remove_numbers: boolean
         :return: doc: list of lists, cleaned sentences in word-tokens
         '''
 
