@@ -82,18 +82,18 @@ class Preprocess(object):
         review_text = self.html_to_text(review)
         sentences = nltk.tokenize.sent_tokenize(review_text)
 
-        sentences = list(map(self.remove_non_letters, sentences)) #remove non-letter, but keep orginal spaces
+        sentences = map(self.remove_non_letters, sentences) #remove non-letter, but keep orginal spaces
 
-        sentences = list(map(lambda s: s.lower().split(), sentences))
+        sentences = map(lambda s: s.lower().split(), sentences)
 
-        sentences_tagged = list(map(lambda s: nltk.pos_tag(s), sentences))
+        sentences_tagged = map(lambda s: nltk.pos_tag(s), sentences)
 
         if remove_stopwords:
             stops = set(stopwords.words("english"))
-            sentences_tagged = list(map(lambda l: list(filter(lambda x: x[0] not in stops, l)), sentences_tagged))
+            sentences_tagged = map(lambda l: list(filter(lambda x: x[0] not in stops, l)), sentences_tagged)
 
         if remove_numbers:
-            sentences_tagged = list(map(lambda l: list(filter(lambda x: x[0].isalpha(), l)), sentences_tagged))
+            sentences_tagged = map(lambda l: list(filter(lambda x: x[0].isalpha(), l)), sentences_tagged)
 
         # lemmatization
         tag_map = defaultdict(lambda: wordnet.NOUN)
@@ -105,7 +105,7 @@ class Preprocess(object):
 
         doc = []
         for sent in sentences_tagged:
-            s = list(map(lambda (word, tag): lemma.lemmatize(word, pos=tag_map[tag[0]]), sent))
+            s = map(lambda (word, tag): lemma.lemmatize(word, pos=tag_map[tag[0]]), sent)
             doc.append(" ".join(s))
 
         return doc
