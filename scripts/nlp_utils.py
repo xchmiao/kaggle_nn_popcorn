@@ -11,6 +11,26 @@ class Preprocess(object):
     def __init__(self):
         pass
 
+    def _html_to_text(self, review):
+        review_text = BeautifulSoup(review, "html").get_text()
+        if len(review_text) < 1:
+            review_text = review
+        return review_text
+
+    def _remove_non_letters(self, text):
+        return re.sub("[^a-zA-Z]", " ", review_text)
+
+    def _remove_sw(self, word_list):
+        '''
+        Remove stop words from the input word list
+        :param word_list: list of strings
+        :return: list of strings
+        '''
+        stops = set(stopwords.words("english"))
+        words = filter(lambda x: x not in stops, word_list)
+        return words
+
+
     def review_to_wordlist(self, review, remove_stopwords = True, remove_numbers = False):
         '''
 
@@ -21,15 +41,13 @@ class Preprocess(object):
         '''
 
         # 1. Remove Html
-        review_text = BeautifulSoup(review, "html").get_text()
-        if len(review_text) < 1:
-            review_text = review
-        review_text = re.sub("[^a-zA-Z]", " ", review_text) # remove non-letters
+        review_text = self._html_to_text(review)
+        review_text = self._remove_non_letters(review_text) # remove non-letters
+
         words = review_text.lower().split()
 
         if remove_stopwords:
-            stops = set(stopwords.words("english"))
-            words = filter(lambda x: x not in stops, words)
+            words = self._remove_sw(words)
 
         if remove_numbers:
             words = filter(lambda x: x.isalpha(), words)
@@ -38,9 +56,7 @@ class Preprocess(object):
 
     def review_to_sentences(self, review, remove_stopwords = True, remove_numbers = False):
 
-        review_text = BeautifulSoup(review, "html").get_text()
-        if len(review_text) < 1:
-            review_text = review
+        review_text = self._html_to_text(review)
         raw_sentences = nltk.sent_tokenize(review_text.strip())
 
         sentences = []
