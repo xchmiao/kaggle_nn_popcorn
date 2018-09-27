@@ -31,7 +31,7 @@ class Preprocess(object):
         return words
 
 
-    def review_to_wordlist(self, review, remove_stopwords = True, remove_numbers = False):
+    def review_to_wordlist(self, review, remove_stopwords = True):
         '''
 
         :param review:
@@ -48,12 +48,9 @@ class Preprocess(object):
         if remove_stopwords:
             words = self.remove_sw(words)
 
-        if remove_numbers:
-            words = filter(lambda x: x.isalpha(), words)
-
         return words
 
-    def review_to_sentences(self, review, remove_stopwords = True, remove_numbers = False):
+    def review_to_sentences(self, review, remove_stopwords = True):
 
         review_text = self.html_to_text(review)
         raw_sentences = nltk.sent_tokenize(review_text.strip())
@@ -61,15 +58,15 @@ class Preprocess(object):
         sentences = []
         for raw_sentence in raw_sentences:
             if len(raw_sentence) > 0:
-                sentences.append(self.review_to_wordlist(raw_sentence, remove_stopwords, remove_numbers))
+                sentences.append(self.review_to_wordlist(raw_sentence, remove_stopwords))
 
         return sentences
 
-    def clean_review_tfidf(self, review, remove_stopwords = True, remove_numbers = True):
+    def clean_review_tfidf(self, review, remove_stopwords = True):
         '''
         Clean the review text by converting it to html, tokenizing to sentences, removing non-letters,
         and lemmatization, and make it ready to extract TF-IDF features.
-        
+
         :param review: string
         :param remove_stopwords: boolean
         :param remove_numbers: boolean
