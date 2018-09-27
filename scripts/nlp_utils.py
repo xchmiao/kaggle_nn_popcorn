@@ -90,10 +90,10 @@ class Preprocess(object):
 
         if remove_stopwords:
             stops = set(stopwords.words("english"))
-            sentences_tagged = map(lambda l: list(filter(lambda x: x[0] not in stops, l)), sentences_tagged)
+            sentences_tagged = map(lambda l: filter(lambda x: x[0] not in stops, l), sentences_tagged)
 
         if remove_numbers:
-            sentences_tagged = map(lambda l: list(filter(lambda x: x[0].isalpha(), l)), sentences_tagged)
+            sentences_tagged = map(lambda l: filter(lambda x: x[0].isalpha(), l), sentences_tagged)
 
         # lemmatization
         tag_map = defaultdict(lambda: wordnet.NOUN)
