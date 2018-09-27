@@ -15,6 +15,8 @@ class Preprocess(object):
         review_text = BeautifulSoup(review, "html").get_text()
         if len(review_text) < 1:
             review_text = review
+        review_text = re.sub(r"\<.*\>", "", review_text)
+        review_text = review_text.decode("ascii", "ignore")
         return review_text
 
     def remove_non_letters(self, text):
