@@ -65,11 +65,12 @@ class Preprocess(object):
 
         return sentences
 
-    def clean_review_tfidf(self, remove_stopwords = True, remove_numbers = True):
+    def clean_review_tfidf(self, review, remove_stopwords = True, remove_numbers = True):
         '''
         Clean the review text by converting it to html, tokenizing to sentences, removing non-letters,
         and lemmatization, and make it ready to extract TF-IDF features.
-
+        
+        :param review: string
         :param remove_stopwords: boolean
         :param remove_numbers: boolean
         :return: doc: list of lists, cleaned sentences in word-tokens
