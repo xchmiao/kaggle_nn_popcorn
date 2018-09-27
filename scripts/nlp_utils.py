@@ -72,28 +72,23 @@ class Preprocess(object):
     def clean_review_tfidf(self, review, remove_stopwords = True):
         '''
         Clean the review text by converting it to html, tokenizing to sentences, removing non-letters,
-        and lemmatization, and make it ready to extract TF-IDF features.
+        and lemmatization, and make it ready to extract TF-IDF features, and return a list of cleaned reviews.
 
         :param review: string
         :param remove_stopwords: boolean
-        :return: doc: list of lists, cleaned sentences in word-tokens
+        :return: doc: list
         '''
 
         review_text = self.html_to_text(review)
         sentences = nltk.tokenize.sent_tokenize(review_text)
-
         sentences = map(self.remove_non_letters, sentences) #remove non-letter, but keep orginal spaces
 
         sentences = map(lambda s: s.lower().split(), sentences)
-
         sentences_tagged = map(lambda s: nltk.pos_tag(s), sentences)
 
         if remove_stopwords:
             stops = set(stopwords.words("english"))
             sentences_tagged = map(lambda l: filter(lambda x: x[0] not in stops, l), sentences_tagged)
-
-        if remove_numbers:
-            sentences_tagged = map(lambda l: filter(lambda x: x[0].isalpha(), l), sentences_tagged)
 
         # lemmatization
         tag_map = defaultdict(lambda: wordnet.NOUN)
