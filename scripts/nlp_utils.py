@@ -33,11 +33,11 @@ class Preprocess(object):
 
     def review_to_wordlist(self, review, remove_stopwords = True):
         '''
+        Clean review text and transform one review to a list of words (no punctuation, no number).
 
-        :param review:
-        :param remove_stopwords:
-        :param remove_numbers:
-        :return:
+        :param review: string
+        :param remove_stopwords: boolean, whether or not to remove stop words from review text
+        :return: list of strings
         '''
 
         review_text = self.html_to_text(review)

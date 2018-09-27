@@ -1,5 +1,8 @@
-
 # coding: utf-8
+'''
+This script is to process the reviews and make it ready to learn word embeddings (Word2Vec)
+and extract tf-idf features.
+'''
 
 import pandas as pd
 import pickle
