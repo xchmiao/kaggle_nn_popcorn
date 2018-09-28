@@ -41,7 +41,7 @@ if __name__ == "__main__":
         test_docs.append(prep.clean_review_tfidf(review))
         i = i + 1
 
-    with open("docs", "wb") as fp:
+    with open("test_docs", "wb") as fp:
         pickle.dump(test_docs, fp)
 
     fp.close()

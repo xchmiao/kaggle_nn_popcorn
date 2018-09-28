@@ -109,4 +109,5 @@ class Preprocess(object):
             s = map(lambda (word, tag): lemma.lemmatize(word, pos=tag_map[tag[0]]), sent)
             doc.append(" ".join(s))
 
+        doc = ". ".join(doc)
         return doc
