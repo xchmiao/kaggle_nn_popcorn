@@ -13,10 +13,14 @@ class Preprocess(object):
 
     def html_to_text(self, review):
         review_text = BeautifulSoup(review, "html").get_text()
-        if len(review_text) < 1:
+        if len(review_text) == 0:
             review_text = review
+        
         review_text = re.sub(r"\<.*\>", "", review_text)
-        review_text = review_text.decode("ascii", "ignore")
+        try:
+            review_text = review_text.encode("ascii", "ignore").decode("ascii")
+        except UnicodeDecodeError:
+            review_text = review_text.decode("ascii", "ignore")
         return review_text
 
     def remove_non_letters(self, text):
