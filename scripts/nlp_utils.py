@@ -12,7 +12,7 @@ class Preprocess(object):
         pass
 
     def html_to_text(self, review):
-        review_text = BeautifulSoup(review, "html").get_text()
+        review_text = BeautifulSoup(review, "lxml").get_text()
         if len(review_text) == 0:
             review_text = review
         
@@ -24,7 +24,7 @@ class Preprocess(object):
         return review_text
 
     def remove_non_letters(self, text):
-        return re.sub("[^a-zA-Z]", " ", review_text)
+        return re.sub("[^a-zA-Z]", " ", text)
 
     def remove_sw(self, word_list):
         '''
